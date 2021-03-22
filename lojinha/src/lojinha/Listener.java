@@ -2,5 +2,5 @@ package lojinha;
 
 public interface Listener {
 	
-	public void update(Pedido pedido);
+	public void update(PedidoInterface pedido);
 }

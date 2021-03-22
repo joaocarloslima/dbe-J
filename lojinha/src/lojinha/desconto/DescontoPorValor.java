@@ -2,7 +2,7 @@ package lojinha.desconto;
 
 import java.math.BigDecimal;
 
-import lojinha.Pedido;
+import lojinha.PedidoInterface;
 
 public class DescontoPorValor extends Desconto{
 
@@ -11,12 +11,12 @@ public class DescontoPorValor extends Desconto{
 	}
 
 	@Override
-	public BigDecimal aplicar(Pedido pedido) {
+	public BigDecimal aplicar(PedidoInterface pedido) {
 		return pedido.getValor().multiply(new BigDecimal("0.1"));
 	}
 
 	@Override
-	protected boolean deveAplicar(Pedido pedido) {
+	protected boolean deveAplicar(PedidoInterface pedido) {
 		return pedido.getValor().compareTo(new BigDecimal("500")) > 0 ;
 	}
 	

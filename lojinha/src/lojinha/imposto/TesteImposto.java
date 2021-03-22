@@ -3,20 +3,23 @@ package lojinha.imposto;
 import java.math.BigDecimal;
 
 import lojinha.Pedido;
+import lojinha.PedidoInterface;
+import lojinha.PedidoProxy;
 
 public class TesteImposto {
 	public static void main(String[] args) {
+		
+		Imposto imposto = new Icms(new Iss(new Ipi(null)));
+		
 		CalculadoraDeImposto calculadoraDeImposto = 
-				new CalculadoraDeImposto(new Iss());
-		Pedido pedido = new Pedido(new BigDecimal("200"));
+				new CalculadoraDeImposto(imposto);
+		PedidoInterface pedido = new PedidoProxy(new Pedido(new BigDecimal("100")));
 		
-		BigDecimal imposto = calculadoraDeImposto.calcular(pedido);
+		BigDecimal valorDoImposto = calculadoraDeImposto.calcular(pedido);
 		
-		System.out.println(imposto);
+		System.out.println(valorDoImposto);
 		
-		calculadoraDeImposto.setImposto(new Icms());
-		imposto = calculadoraDeImposto.calcular(pedido);
-		System.err.println(imposto);
+		
 		
 	}
 }

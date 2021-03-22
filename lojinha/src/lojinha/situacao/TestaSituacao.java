@@ -3,14 +3,15 @@ package lojinha.situacao;
 import java.math.BigDecimal;
 
 import lojinha.Pedido;
+import lojinha.PedidoInterface;
+import lojinha.PedidoProxy;
 
 public class TestaSituacao {
 	public static void main(String[] args) {
-		Pedido pedido = new Pedido(new BigDecimal("100"));
-		
+		PedidoInterface pedido = 
+				new PedidoProxy(new Pedido(new BigDecimal("100")));
+		System.out.println(pedido.getValor());
 		pedido.abrirChamado();
-
-		
 		System.out.println(pedido.getSituacao());
 		
 		pedido.pagar();
@@ -20,6 +21,8 @@ public class TestaSituacao {
 		pedido.abrirChamado();
 		
 		System.out.println(pedido.getSituacao());
+		System.out.println(pedido.getValor());
+
 
 	}
 }

@@ -1,16 +1,16 @@
 package lojinha.situacao;
 
-import lojinha.Pedido;
+import lojinha.PedidoInterface;
 
 public class Cancelado extends Situacao {
 
 	@Override
-	public void reabrir(Pedido pedido) {
+	public void reabrir(PedidoInterface pedido) {
 		pedido.setSituacao(new Aberto());
 	}
 
 	@Override
-	public void abrirChamado(Pedido pedido) {
+	public void abrirChamado(PedidoInterface pedido) {
 		System.out.println("chamado para comercial");
 		
 	}

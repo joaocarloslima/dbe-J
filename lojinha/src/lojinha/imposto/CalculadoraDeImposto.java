@@ -2,13 +2,13 @@ package lojinha.imposto;
 
 import java.math.BigDecimal;
 
-import lojinha.Pedido;
+import lojinha.PedidoInterface;
 
 public class CalculadoraDeImposto {
 	
 	private Imposto imposto;
 	
-	public BigDecimal calcular(Pedido pedido) {
+	public BigDecimal calcular(PedidoInterface pedido) {
 		return imposto.calcular(pedido);
 	}
 
