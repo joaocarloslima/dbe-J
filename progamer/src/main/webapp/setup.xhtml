@@ -4,56 +4,88 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	
-	>
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 
-	<ui:composition template="_template.xhtml">
-		<ui:define name="content">
-			<h:form>
+<ui:composition template="_template.xhtml">
+	<ui:define name="content">
+		<p:messages id="messages">
+			<p:autoUpdate />
+		</p:messages>
+		<h:form>
 			<p:card class="card-form">
-				<p:messages><p:autoUpdate /></p:messages>
-		    
-			    <f:facet name="title">
+
+				<f:facet name="title">
 			        New Setup
 			    </f:facet>
-			
-			
-					<div class="p-field p-grid">
-						<label for="name" class="p-col-fixed" style="width: 100px">Name</label>
-						<div class="p-col">
-							<p:inputText id="name" value="#{setupBean.setup.name}" required="true" />
-						</div>
+
+
+				<div class="p-field p-grid">
+					<p:outputLabel for="name" class="p-col-fixed" style="width: 100px">Name</p:outputLabel>
+					<div class="p-col">
+						<p:inputText id="name" value="#{setupBean.setup.name}" required="true" >
+							<f:ajax event="blur" render="messages" />
+						</p:inputText>
 					</div>
-			
-					<div class="p-field p-grid">
-						<label for="description" class="p-col-fixed" style="width: 100px">Description</label>
-						<div class="p-col">
-							<p:inputTextarea id="description" value="#{setupBean.setup.description}">
-								<f:validateLength maximum="255" minimum="50" />
-							</p:inputTextarea>
-						</div>
+				</div>
+
+				<div class="p-field p-grid">
+					<p:outputLabel value="Description" for="description"
+						class="p-col-fixed" style="width: 100px" />
+					<div class="p-col">
+						<p:inputTextarea id="description"
+							value="#{setupBean.setup.description}">
+							<f:validateLength maximum="255" minimum="50" />
+							<f:ajax event="blur" render="messages" />
+						</p:inputTextarea>
 					</div>
-			
-					<div class="p-field p-grid">
-						<label for="price" class="p-col-fixed" style="width: 100px">Price</label>
-						<div class="p-col">
-							<p:inputText id="price" value="#{setupBean.setup.price}">
-								<f:validateDoubleRange minimum="0" />
-							</p:inputText>
-						</div>
+				</div>
+
+				<div class="p-field p-grid">
+					<p:outputLabel value="Price" for="price" class="p-col-fixed"
+						style="width: 100px" />
+					<div class="p-col">
+						<p:inputText id="price" value="#{setupBean.setup.price}"
+							required="true">
+							<f:validateDoubleRange minimum="0" />
+							<f:ajax event="blur" render="messages" />
+						</p:inputText>
 					</div>
-			
-			
-			    <f:facet name="footer">
-			        <p:commandButton icon="pi pi-check" value="Save" action="#{setupBean.save}"/>
-			        <p:commandButton icon="pi pi-times" value="Cancel" styleClass="ui-button-secondary" style="margin-left: .5em"/>
-			    </f:facet>
+				</div>
+
+
+				<f:facet name="footer">
+					<p:commandButton icon="pi pi-check" value="Save" action="#{setupBean.save}">
+						<f:ajax execute="@form" render="messages :setups" />
+					</p:commandButton>
+					<p:commandButton icon="pi pi-times" value="Cancel"
+						styleClass="ui-button-secondary" style="margin-left: .5em" />
+				</f:facet>
 			</p:card>
 		</h:form>
-		</ui:define>
-	</ui:composition>
+
+
+		<div class="card">
+			<h:form id="form">
+				<p:dataTable id="setups" var="setup"
+					value="#{setupBean.setups}" 
+					rowKey="#{setup.id}"
+					selectionMode="single">
+					
+					<p:column headerText="Name">
+						<h:outputText value="#{setup.name}" />
+					</p:column>
+					<p:column headerText="Price">
+						<h:outputText value="#{setup.price}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+
+
+
+	</ui:define>
+</ui:composition>
 
 
 
