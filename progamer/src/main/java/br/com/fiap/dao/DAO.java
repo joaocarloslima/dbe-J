@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
+import br.com.fiap.model.Setup;
 import br.com.fiap.util.JPAUtil;
 
 public class DAO<T> {
@@ -31,6 +32,17 @@ public class DAO<T> {
 		TypedQuery<T> createQuery = manager.createQuery(query);
 		List<T> resultList = createQuery.getResultList();
 		return resultList;
+	}
+
+	public T findById(Long id) {
+		return manager.find(classs, id);
+	}
+
+	public void update(Setup setup) {
+		manager.getTransaction().begin();
+		manager.merge(setup);
+		manager.flush();
+		manager.getTransaction().commit();
 	}
 
 }
