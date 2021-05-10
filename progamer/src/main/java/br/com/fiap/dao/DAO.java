@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.fiap.model.Setup;
+import br.com.fiap.model.User;
 import br.com.fiap.util.JPAUtil;
 
 public class DAO<T> {
@@ -43,6 +44,18 @@ public class DAO<T> {
 		manager.merge(setup);
 		manager.flush();
 		manager.getTransaction().commit();
+	}
+
+	public boolean exist(User user) {
+		TypedQuery<User> query = manager.createQuery("SELECT u from User u WHERE "
+				+ "email= :email AND "
+				+ "password = :password", User.class);
+		
+		query.setParameter("email", user.getEmail());
+		query.setParameter("password", user.getPassword());
+		
+		User result = query.getSingleResult();
+		return result != null;
 	}
 
 }
